@@ -1,0 +1,145 @@
+@import "Config";
+
+nav {
+    background-color: white;
+    z-index: 100;
+    transition: background-color 0.5s;
+
+    &.scrolling {
+        background-color: #ffffffdd;
+    }
+
+    &.collapsed {
+        .navbar-brand {
+            opacity: 0;
+        }
+    }
+
+    .navbar-brand {
+        font-size: 24px;
+        font-weight: 700;
+
+        transition: opacity 0.25s;
+        img {
+            width: auto;
+            height: 45px;
+            margin-right: 0.5em;
+        }
+    }
+
+    .nav-links {
+        a {
+            margin: 0.5em 0.5em;
+            padding: 0.5em 0.75em;
+            font-weight: bold;
+            border-radius: 0.25em;
+
+            transition: background-color .25s ease-out;
+
+            &:not(.active):hover {
+                background-color: rgba($color: #000, $alpha: 0.1);
+            }
+
+            &.active {
+                span {
+                    position: relative;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: -25px;
+                        left: 0;
+                        right: 0;
+                        height: 4px;
+                        margin: 0 -0.75em;
+                        border-bottom-left-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                        background-image: linear-gradient(45deg, $SecondaryColor, $PrincipalColor);
+
+                        animation: hoverLine 0.1s ease-in;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Mid devices
+@media screen and (max-width: 767.98px) {
+    nav {
+        &.collapsed {
+            .navbar-collapse {
+                display: block;
+                background-color: white;
+                transition: background-color 0.25s ease-out, transform 0.1s ease-out;
+                transform: translateX(0);
+            }
+        }
+
+        &.scrolling {
+            .navbar-collapse {
+                background-color: #ffffffdd;
+            }
+        }
+
+        .navbar-collapse {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            transform: translateX(100%);
+            padding-bottom: 10px;
+            background-color: transparent;
+
+            transition: background-color 0.5s, transform 0.25s ease-out;
+
+            .nav-links {
+                height: calc(100vh - 72.25px);
+                padding: 0 16px;
+                font-size: 1.5em;
+                align-items: center;
+
+                a {
+                    &.active {
+                        span {
+                            background-color: $SecondaryColor;
+                            background-image: linear-gradient(45deg, $SecondaryColor, $PrincipalColor);
+                            background-size: cover;
+                            background-clip: text;
+                            -moz-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                            -moz-text-fill-color: transparent;
+
+                            &::before {
+                                height: 0;
+                            }
+                        }
+                    }
+                    &.btn-premium {
+                        margin: auto 0;
+                        text-align: center;
+                        width: 80%;
+
+                        &.active span {
+                            -webkit-text-fill-color: white;
+                            -moz-text-fill-color: white;
+                            font-size: 24px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes hoverLine {
+    0% {
+        left: 50%;
+        right: 50%;
+    }
+
+    100% {
+        left: 0;
+        right: 0;
+    }
+}

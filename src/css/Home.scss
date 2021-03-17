@@ -1,0 +1,182 @@
+.Home {
+    .carousel-image {
+        width: 100vw;
+        height: 40vw;
+        background-attachment: local;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 0 center;
+    }
+
+    .title {
+        font-weight: bold;
+        text-align: center;
+        margin: 50px 0 25px 0;
+    }
+
+    .glass-categories:hover .glasses:not(:hover) {
+        flex-basis: 25%;
+
+        transition: flex-basis .25s;
+    }
+
+    .glass-categories {
+        display: flex;
+        flex-wrap: wrap;
+
+        .glasses {
+            position: relative;
+            background-color: white;
+            flex: 0 1 33.33%;
+
+            transition: flex-basis 0.1s;
+
+            .image {
+                width: 100%;
+                height: 300px;
+                background-attachment: local;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+            }
+
+            span {
+                visibility: hidden;
+                opacity: 0;
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translate(-50%, 150%);
+                z-index: 100;
+
+                color: white;
+                text-transform: uppercase;
+                text-align: center;
+                font-size: 20px;
+                font-weight: bold;
+                letter-spacing: 2px;
+            }
+
+            &:hover {
+                cursor: pointer;
+                flex-basis: 50%;
+
+                transition: flex-basis 0.25s;
+
+                span {
+                    visibility: visible;
+                    opacity: 1;
+                    transform: translate(-50%, -50%);
+
+                    transition: opacity 0.5s, transform 0.2s ease-out;
+                }
+
+                .image::after {
+                    content: "";
+                    position: absolute;
+
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(180deg, transparent 50%, #010a13e6 150%);
+                }
+            }
+        }
+    }
+
+    .slick-list {
+        height: 100%;
+        .slick-track {
+            height: 100%;
+
+            .slick-slide {
+                height: 200px !important;
+                border: 1px solid #99999999;
+
+                div {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px 0;
+
+                    img {
+                        width: 80%;
+                    }
+
+                    h5 {
+                        letter-spacing: 2px;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+
+    .slick-prev {
+        left: 3% !important;
+        z-index: 1;
+        transform: scale(1.5);
+
+        &::before {
+            color: black;
+        }
+    }
+
+    .slick-next {
+        right: 3% !important;
+        z-index: 1;
+        transform: scale(1.5);
+
+        &::before {
+            color: black;
+        }
+    }
+
+    .slide-shop {
+        background-image: url(https://img.freepik.com/vector-gratis/fondo-blanco-sutil-lineas-diagonales_1017-14763.jpg?size=626&ext=jpg);
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .brands {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 40px;
+
+        .image {
+            flex: 0 1 25%;
+            height: 200px;
+            background-attachment: local;
+            background-repeat: no-repeat;
+            background-size: 50%;
+            background-position: center center;
+
+            transition: background-size 0.25s;
+
+            &:hover {
+                background-size: 75%;
+            }
+        }
+    }
+
+}
+
+// Mid devices
+@media screen and (max-width: 991.98px) {
+    .Home {
+        .brands {
+            .image {
+                flex: 0 1 33.333%;
+                height: 100px;
+            }
+        }
+
+        .politics-and-copyright {
+            text-align: center;
+        }
+    }
+}

@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Signika&display=swap");
+@import "Config";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.modal-config{
+  border-radius: .25rem !important;
+}
+
+.btn {
+  box-shadow: none !important;
+}
+
+.principal-font {
+  font-family: "Merriweather", sans-serif;
+}
+
+.secondary-font {
+  font-family: "Signika", sans-serif;
+}
+
+.btn-premium {
+  background-image: linear-gradient(45deg, $PremiumColorBack, $PremiumColorFront);
+  color: white;
+  border-radius: 0.25em;
+
+  &:hover {
+    color: white;
+  }
+  &:active,
+  &:focus {
+    color: white;
+  }
+
+  &.active {
+    background-image: none;
+    background-color: $SecondaryColor;
+  }
+}
+
+.btn-confirm {
+  background-color: $PrincipalColor !important;
+  color: white !important;
+  border-radius: 0.25em !important;
+  box-shadow: none !important;
+
+  transition: all 0.25s;
+
+  &:hover {
+    background-color: rgba($color: $PrincipalColor, $alpha: 0.75) !important;
+  }
+}
+
+.btn-cancel {
+  background-color: transparent !important;
+  color: $SecondaryColor !important;
+  border-radius: 0.25em !important;
+  box-shadow: none !important;
+  font-weight: bold;
+}
+
+.Content {
+  margin-top: 73px;
+}
+
+.toggler {
+  position: relative;
+  border-radius: 50%;
+  padding: 0.5em 0.5em;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(0);
+    border-radius: inherit;
+    z-index: -100;
+
+    transition: transform 0.2s ease-out, background-color 0.2s;
+  }
+
+  &:active {
+    background-color: #99999922;
+    z-index: -50;
+
+    &::before {
+      background-color: #99999933;
+      transform: scale(1.05);
+    }
+  }
+}

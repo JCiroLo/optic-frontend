@@ -1,0 +1,132 @@
+footer {
+    color: white;
+    background-color: #18161c;
+    position: relative;
+
+    svg {
+        position: absolute;
+        bottom: 100%;
+        width: 100%;
+        z-index: -100;
+    }
+
+    .sumary {
+        padding-top: 30px;
+    }
+
+    .contact-us {
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid #ffffff22;
+
+        div {
+            display: flex;
+            margin: 0 auto;
+            padding: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 230px;
+
+            i {
+                margin: auto 20px;
+            }
+
+            p {
+                height: 46.667px;
+                margin-bottom: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                span {
+                    color: #ffffff55;
+                    font-size: 14px;
+                }
+            }
+
+            &:hover {
+                background-color: #99999922;
+            }
+        }
+    }
+
+    .categories {
+        ul {
+            padding: 0 10px;
+
+            h5 {
+                font-weight: bold;
+                padding: 10px;
+            }
+
+            li {
+                padding: 10px;
+                border-radius: 5px;
+                color: #999999;
+
+                &:hover {
+                    background-color: #99999922;
+                }
+            }
+        }
+    }
+
+    .social-networks {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        margin: 20px;
+        border-top: 1px solid #ffffff22;
+        border-bottom: 1px solid #ffffff22;
+
+        .facebook:hover {
+            transition: color 0.25s;
+            color: #3b5998;
+        }
+
+        .instagram:hover {
+            transition: color 0.25s;
+            color: #e1306c;
+        }
+
+        .twitter:hover {
+            transition: color 0.25s;
+            color: #00acee;
+        }
+
+        .youtube:hover {
+            transition: color 0.25s;
+            color: #c4302b;
+        }
+
+        span {
+            cursor: pointer;
+            font-size: 34px;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 20px;
+
+            transition: background-color 0.25s;
+
+            &:hover {
+                background-color: #99999922;
+            }
+        }
+    }
+
+    .politics-and-copyright {
+        color: #ffffff55;
+        padding: 0 20px;
+        padding-bottom: 30px;
+
+        a {
+            padding: 5px 10px;
+            transition: color 0.25s;
+            font-size: 14px;
+
+            &:hover {
+                color: white;
+            }
+        }
+    }
+}
