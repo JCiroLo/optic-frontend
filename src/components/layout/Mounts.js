@@ -1,23 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import classnames from 'classnames'
+import classnames from 'classnames';
+import { Link } from 'react-router-dom';
 
-import '../../css/Mounts.scss'
+import { getAllGlasses } from '../utils/Actions';
+import LoadingScreen from '../layout/LoadingScreen';
 
-const mounts = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 }
-]
+import '../../css/Mounts.scss';
 
 const useOutsideAlerter = (ref, hideFunction) => {
     useEffect(() => {
         function handleClickOutside(event) {
             if (ref.current && !ref.current.contains(event.target)) {
-                hideFunction(true)
+                hideFunction(false)
+                document.body.classList.remove("fix-overflow");
             }
         }
         document.addEventListener("mousedown", handleClickOutside);
@@ -27,41 +22,64 @@ const useOutsideAlerter = (ref, hideFunction) => {
     }, [ref, hideFunction]);
 }
 
-function Mounts({ onChange }) {
-    const [hiden, setHide] = useState(true)
-    const [selectedId, setSelectedId] = useState(null)
+function Mounts({ onChange, toggleVisibility, visibility }) {
+    const [selectedId, setSelectedId] = useState(null);
+    const [mounts, setMounts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        (async () => {
+            const { stateAction, allGlasses } = await getAllGlasses();
+            if (stateAction) { setMounts(allGlasses); }
+            setLoading(false);
+        })()
+    }, [])
 
     const mountSelectorRef = useRef(null)
 
-    useOutsideAlerter(mountSelectorRef, setHide)
+    useOutsideAlerter(mountSelectorRef, toggleVisibility)
 
     return (
-        <div className={classnames("mounts-slider row m-0 align-items-center", { hiden })}>
-            <div className="action-button" onClick={() => setHide(false)}>
-                <i className="material-icons">arrow_back_ios_new</i>
-            </div>
-            <div className="mounts-section" ref={mountSelectorRef}>
-                <div className="title principal-font row mx-0 justify-content-center">
-                    <i className="material-icons" onClick={() => setHide(true)}>close</i>
-                    <span className="flex-grow-1">Elije tu montura ideal</span>
-                </div>
-                <div className="content row align-content-start flex-wrap m-0">
-                    {mounts.map(mount => {
-                        return <img
-                            key={mount.id}
-                            src={`https://firebasestorage.googleapis.com/v0/b/optica-809a9.appspot.com/o/ex${mount.id}.png?alt=media&token=8f686261-a1d4-41f2-9d84-4036f2d1d67f`}
-                            alt={`montura${mount.id}`}
-                            className={classnames("col-12 col-sm-6", { 'selected': selectedId === mount.id })}
-                            onClick={(e) => {
-                                onChange(e.target.src)
-                                setSelectedId(mount.id)
-                            }}
-                        />
-                    })}
-                </div>
+        <>
+            {loading && visibility && <LoadingScreen />}
+            <div className={classnames("mounts-slider", { 'show': !loading && visibility })}>
+                <div className="mounts-section" ref={mountSelectorRef}>
+                    <div className="title principal-font">
+                        <i className="material-icons"
+                            onClick={() => {
+                                toggleVisibility(false);
+                                document.body.classList.remove("fix-overflow");
+                            }}>close</i>
+                        <span>Elige tu montura ideal</span>
+                    </div>
+                    <div className="content row align-content-start flex-wrap m-0">
+                        {mounts.map((frame, index) => (
+                            <div
+                                key={index}
+                                className={classnames("frame col-6 col-sm-6", { 'selected': selectedId === frame._id })}
+                            >
+                                <div
+                                    className="thumb"
+                                    onClick={(e) => {
+                                        onChange(`https://firebasestorage.googleapis.com/v0/b/optica-809a9.appspot.com/o/${frame._id}_testing.png?alt=media&token=2cc6b58c-a5fe-4688-83eb-8f0337e2e7cc`)
+                                        setSelectedId(frame._id)
+                                    }}
+                                    style={{ backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/optica-809a9.appspot.com/o/${frame._id}_testing.png?alt=media&token=2cc6b58c-a5fe-4688-83eb-8f0337e2e7cc)` }}
+                                />
+                                <div className="info">
+                                    <h5 className="principal-font font-weight-bold">{frame.brand}</h5>
+                                    <Link className="more-info" to={`/detail/${frame._id}`} target='_blank'>
+                                        <span className="material-icons">info</span>
+                                    </Link>
 
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

@@ -2,6 +2,7 @@
 
 .Test {
     height: calc(100vh - 73px);
+    position: relative;
 
     .konvajs-content {
         box-shadow: 0 0 20px $shadow;
@@ -15,73 +16,66 @@
         display: none;
     }
 
-    .btn-back {
-        position: fixed;
-        z-index: 1000;
+    .test-actions-container {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+
+        bottom: 0;
         left: 0;
-        margin-top: -60px;
-        margin-left: 20px;
-        font-size: 3rem;
-        border-radius: 50%;
-        cursor: pointer;
-        color: rgba($SecondaryColor, $alpha: 0.75);
-        user-select: none;
+        z-index: 300;
+        width: 100%;
+        margin-bottom: 2em;
 
-        transition: background-color 0.1s ease-in;
+        .test-actions {
+            display: flex;
 
-        &:active {
-            background-color: #99999955;
+            padding: 5px;
+
+            background-color: $PrincipalColor;
+            box-shadow: 0 0 0 3px $SecondaryColor;
+            border-radius: 100px;
+
+            .material-icons {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+                cursor: pointer;
+                color: white;
+                user-select: none;
+                font-size: 2em;
+
+                transition: background-color 0.1s ease-in;
+
+                &:active {
+                    background-color: #99999955;
+                }
+            }
         }
     }
 
-    .btn {
-        display: flex;
-        align-items: center;
+    .menu-options {
+        .btn {
+            font-size: 1.5em;
+            margin: 8px 0;
 
-        background-image: linear-gradient(45deg, $SecondaryColor 50%, $PrincipalColor 50%);
-        background-size: 250%;
-        background-position: 0;
-        background-repeat: no-repeat;
-        color: white;
-        border-radius: 0.25em;
-        border: 0;
+            i.material-icons {
+                margin-right: 0.5em;
+            }
 
-        font-weight: bold;
-        font-size: 1.25rem;
+            .spinner-border {
+                color: white;
+                width: 1.25em;
+                height: 1.25em;
+                margin-right: 0.5em;
+            }
 
-        transition: transform 0.05s ease-in, background-color 0.25s ease-out, background-position 0.2s ease-out;
-
-        &.btn-camera {
-            margin: 6px 0;
-        }
-
-        &.btn-photo {
-            margin: 6px 0;
-        }
-
-        &.btn-test-picture {
-            margin: 6px 0;
-        }
-
-        span {
-            padding-left: 0.75rem;
-        }
-
-        i {
-            font-size: 30px;
-        }
-
-        .spinner-border {
-            color: white;
-        }
-
-        &:hover {
-            color: white;
-            background-position: 100%;
-        }
-
-        &:active {
-            transform: scale(1.1);
+            &:active {
+                transform: scale(1.1);
+            }
         }
     }
 
@@ -135,6 +129,15 @@
         }
     }
 }
+
+/* // Mid devices
+@media screen and (max-width: 767.98px) {
+    .Test {
+        .test-actions-container {
+            
+        }
+    }
+} */
 
 @-webkit-keyframes glitch-anim {
     0% {

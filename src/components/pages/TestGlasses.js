@@ -121,6 +121,7 @@ const TestGlasses = ({ navbarHeight = 72.250 }) => {
         x: 0,
         y: 0
     });
+    const [showMounts, setShowMounts] = useState(false);
 
     const webcamRef = useRef(null);
     const videoCanvasRef = useRef(null);
@@ -227,10 +228,30 @@ const TestGlasses = ({ navbarHeight = 72.250 }) => {
 
     return (
         <div className="Test row justify-content-center align-items-center mx-0 r-font principal-font">
-            {cameraState !== 1 &&
-                <span className="material-icons btn-back" onClick={resetValues}>
-                    arrow_back
-                </span>
+            {cameraState !== 1 && cameraState !== 2 &&
+                <>
+                    <Mounts
+                        toggleVisibility={setShowMounts}
+                        visibility={showMounts}
+                        onChange={(image) => setSelectedMount(image)}
+                    />
+                    <div className="test-actions-container">
+                        <div className="test-actions">
+                            <span className="material-icons btn-back" onClick={resetValues}>
+                                arrow_back
+                            </span>
+                            <span className="material-icons btn-camera">
+                                camera_alt
+                            </span>
+                            <span className="material-icons btn-search" onClick={() => {
+                                setShowMounts(true);
+                                document.body.classList.add("fix-overflow");
+                            }}>
+                                search
+                            </span>
+                        </div>
+                    </div>
+                </>
             }
             {cameraState === 0 &&
                 <>
@@ -246,8 +267,8 @@ const TestGlasses = ({ navbarHeight = 72.250 }) => {
                 </>
             }
             {cameraState >= 1 && cameraState <= 2 &&
-                <div className="row flex-column justify-content-center">
-                    <button className="btn btn-camera" onClick={handleUseCam}>
+                <div className="menu-options row flex-column justify-content-center secondary-font">
+                    <button className="btn btn-special" onClick={handleUseCam}>
                         {loadingCamera
                             ? <div className="spinner-border " role="status">
                                 <span className="sr-only">Loading...</span>
@@ -257,7 +278,7 @@ const TestGlasses = ({ navbarHeight = 72.250 }) => {
                         <span>Usar mi camara</span>
                     </button>
 
-                    <label className="btn btn-photo custom-file-upload">
+                    <label className="btn btn-special custom-file-upload">
                         <input type="file" accept="image/*" onChange={HandleUsePhoto} />
                         <i className="material-icons">
                             add_photo_alternate
@@ -265,7 +286,7 @@ const TestGlasses = ({ navbarHeight = 72.250 }) => {
                         <span>Subir foto</span>
                     </label>
 
-                    <button className="btn btn-test-picture" onClick={HandleUseTestPic}>
+                    <button className="btn btn-special" onClick={HandleUseTestPic}>
                         <i className="material-icons">landscape</i>
                         <span>Usar foto de prueba</span>
                     </button>
@@ -303,7 +324,6 @@ const TestGlasses = ({ navbarHeight = 72.250 }) => {
                             />
                         </Layer>
                     </Stage>
-                    <Mounts onChange={(image) => setSelectedMount(image)} />
                 </>
             }
             {cameraState === 4 &&
@@ -328,7 +348,6 @@ const TestGlasses = ({ navbarHeight = 72.250 }) => {
                             />
                         </Layer>
                     </Stage>
-                    <Mounts onChange={(image) => setSelectedMount(image)} />
                 </>
             }
         </div>

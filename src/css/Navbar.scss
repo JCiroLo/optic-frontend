@@ -1,12 +1,22 @@
 @import "Config";
 
 nav {
-    background-color: white;
-    z-index: 100;
-    transition: background-color 0.5s;
+    background-color: #ffffff55;
+    height: $navHeight;
+    padding: 0 !important;
+    z-index: 500;
+    box-shadow: 0 0 0px 2px $shadow-active;
 
-    &.scrolling {
-        background-color: #ffffffdd;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        z-index: -100;
     }
 
     &.collapsed {
@@ -18,6 +28,7 @@ nav {
     .navbar-brand {
         font-size: 24px;
         font-weight: 700;
+        padding: 0 0.5em;
 
         transition: opacity 0.25s;
         img {
@@ -26,39 +37,60 @@ nav {
             margin-right: 0.5em;
         }
     }
+    .navbar-collapse {
+        height: 100%;
+        justify-content: space-between;
+        flex-direction: row-reverse;
 
-    .nav-links {
-        a {
-            margin: 0.5em 0.5em;
-            padding: 0.5em 0.75em;
-            font-weight: bold;
-            border-radius: 0.25em;
+        .nav-links {
+            height: 100%;
 
-            transition: background-color .25s ease-out;
+            a {
+                position: relative;
+                display: flex;
+                align-items: center;
+                padding: 0.5em 0.75em;
+                border-radius: 0;
+                font-weight: bold;
+                margin: 0;
 
-            &:not(.active):hover {
-                background-color: rgba($color: #000, $alpha: 0.1);
-            }
+                transition: background-color 0.2s ease-out;
 
-            &.active {
-                span {
+                i {
+                    display: none;
+                }
+
+                &:hover {
+                    background-color: $shadow;
+                }
+
+                &:active {
+                    background-color: $shadow-active;
+                }
+
+                &.active {
                     position: relative;
 
-                    &::before {
-                        content: "";
-                        position: absolute;
-                        top: -25px;
-                        left: 0;
-                        right: 0;
-                        height: 4px;
-                        margin: 0 -0.75em;
-                        border-bottom-left-radius: 10px;
-                        border-bottom-right-radius: 10px;
-                        background-image: linear-gradient(45deg, $SecondaryColor, $PrincipalColor);
+                    span {
+                        &::before {
+                            content: "";
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            height: 4px;
+                            border-radius: 0;
+                            background-color: $SecondaryColor;
 
-                        animation: hoverLine 0.1s ease-in;
+                            animation: hoverLine 0.1s ease-in;
+                        }
                     }
                 }
+            }
+
+            .nav-brand {
+                width: 3em;
+                display: none;
             }
         }
     }
@@ -67,64 +99,110 @@ nav {
 // Mid devices
 @media screen and (max-width: 767.98px) {
     nav {
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: -100;
+        }
+
         &.collapsed {
+            background-color: #fff;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 0;
+                z-index: -100;
+            }
+
             .navbar-collapse {
-                display: block;
-                background-color: white;
-                transition: background-color 0.25s ease-out, transform 0.1s ease-out;
+                background-color: #fff;
+                opacity: 1;
+                transition: opacity 0.2s ease-in, transform 0.1s ease-in;
                 transform: translateX(0);
             }
         }
 
         &.scrolling {
             .navbar-collapse {
-                background-color: #ffffffdd;
+                background-color: #ffffff;
             }
         }
 
+        .navbar-toggler {
+            margin-right: 0.5em;
+        }
+
         .navbar-collapse {
-            position: absolute;
+            position: fixed;
             left: 0;
             right: 0;
-            top: 100%;
+            top: $navHeight;
+            z-index: 1030;
+            height: calc(100vh - #{$navHeight});
+
             transform: translateX(100%);
             padding-bottom: 10px;
-            background-color: transparent;
+            opacity: 0;
+            background-color: #fff;
 
-            transition: background-color 0.5s, transform 0.25s ease-out;
+            transition: opacity 0.25s ease-out, transform 0.25s ease-out;
 
             .nav-links {
-                height: calc(100vh - 72.25px);
+                overflow-y: scroll;
                 padding: 0 16px;
                 font-size: 1.5em;
-                align-items: center;
 
                 a {
-                    &.active {
-                        span {
-                            background-color: $SecondaryColor;
-                            background-image: linear-gradient(45deg, $SecondaryColor, $PrincipalColor);
-                            background-size: cover;
-                            background-clip: text;
-                            -moz-background-clip: text;
-                            -webkit-text-fill-color: transparent;
-                            -moz-text-fill-color: transparent;
+                    height: initial;
+                    display: flex;
+                    color: $SecondaryColor;
+                    align-items: center;
 
-                            &::before {
-                                height: 0;
-                            }
+                    i {
+                        display: inline;
+                        font-size: 1.5em;
+                        margin-right: 1rem;
+                    }
+
+                    &:not(.nav-brand).active {
+                        position: relative;
+                        color: $PrincipalColor;
+
+                        transition: background-color 0.1s ease-out;
+
+                        &:active {
+                            background-color: $shadow-active;
+                        }
+
+                        span::before {
+                            height: 0;
                         }
                     }
                     &.btn-premium {
-                        margin: auto 0;
-                        text-align: center;
+                        display: flex;
+                        justify-content: center;
+                        margin: 12px auto;
                         width: 80%;
+                    }
+                }
 
-                        &.active span {
-                            -webkit-text-fill-color: white;
-                            -moz-text-fill-color: white;
-                            font-size: 24px;
-                        }
+                .nav-brand {
+                    display: block;
+                    width: auto;
+                    margin: auto auto 0 auto;
+
+                    img {
+                        width: 3em;
                     }
                 }
             }

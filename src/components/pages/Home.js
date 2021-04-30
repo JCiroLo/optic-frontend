@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import Slider from "react-slick";
+
+import SlickCustomArrow from '../layout/SlickCustomArrow';
+import { getAllGlasses } from '../utils/Actions';
+import Frame from '../layout/Frame';
 
 import Pic1 from '../../testPics/carousel-1.jpg';
 import Pic2 from '../../testPics/carousel-2.jpg';
@@ -8,26 +12,30 @@ import Pic3 from '../../testPics/carousel-3.jpg';
 import wGlass from '../../testPics/women-glass.jpg';
 import mGlass from '../../testPics/men-glass.jpg';
 import cGlass from '../../testPics/children-glass.jpg';
+import sliderBackground from '../../testPics/sliderBackground.jpg';
+
 
 import '../../css/Home.scss';
 
-const mounts = [
-    { id: 1, title: 'Gucci T2', price: 50000 },
-    { id: 2, title: 'Torus 3k', price: 45900 },
-    { id: 3, title: 'Arnette', price: 20000 },
-    { id: 4, title: 'Carolina Herrera', price: 149900 },
-    { id: 5, title: 'Polaroid', price: 75000 },
-    { id: 6, title: 'Oakley', price: 40000 },
-    { id: 7, title: 'Gucci Kl', price: 500000 },
-]
-
 const Home = () => {
-    document.title = 'Optica'
+    const [mounts, setMounts] = useState([]);
 
-    var bestSellsSettings = {
+    useEffect(() => {
+        document.title = 'Optica';
+
+        (async () => {
+            const { stateAction, allGlasses } = await getAllGlasses();
+            if (stateAction) setMounts(allGlasses);
+        })()
+        return () => { }
+    }, [])
+
+    const bestSellsSettings = {
         infinite: false,
         slidesToShow: 5,
         slidesToScroll: 1,
+        prevArrow: <SlickCustomArrow styleName={{ left: '0', transform: 'rotate(180deg)' }} />,
+        nextArrow: <SlickCustomArrow styleName={{ right: '0' }} />,
         responsive: [
             {
                 breakpoint: 992,
@@ -72,29 +80,9 @@ const Home = () => {
                 </div>
             </div>
 
-            <h1 className="principal-font title principal-font">MEJORES VENTAS</h1>
+            <h1 className="principal-font title principal-font">... O NUESTRAS MARCAS MAS POPULARES</h1>
 
-            <Slider
-                {...bestSellsSettings}
-                className="slide-shop"
-            >
-                {mounts.map(mount =>
-                    <React.Fragment key={mount.id}>
-                        <small className="principal-font">{mount.title}</small>
-                        <img
-                            key={mount.id}
-                            src={`https://firebasestorage.googleapis.com/v0/b/optica-809a9.appspot.com/o/ex${mount.id}.png?alt=media&token=8f686261-a1d4-41f2-9d84-4036f2d1d67f`}
-                            alt={`montura${mount.id}`}
-                        />
-
-                        <h5>${new Intl.NumberFormat("de-DE").format(mount.price)}</h5>
-                    </React.Fragment>
-                )}
-            </Slider>
-
-            <h1 className="principal-font title principal-font">CON LAS MARCAS MAS POPULARES</h1>
-
-            <div className="brands">
+            <div className="brands" style={{ backgroundImage: `url(${sliderBackground})` }}>
                 <div className="image" style={{ backgroundImage: `url(https://1000marcas.net/wp-content/uploads/2020/03/Ray-Ban-logo.png)` }} />
                 <div className="image" style={{ backgroundImage: `url(https://1000marcas.net/wp-content/uploads/2020/03/Oakley-logo.png)` }} />
                 <div className="image" style={{ backgroundImage: `url(https://1000marcas.net/wp-content/uploads/2020/01/Prada-Logo.png)` }} />
@@ -103,6 +91,44 @@ const Home = () => {
                 <div className="image" style={{ backgroundImage: `url(https://1000marcas.net/wp-content/uploads/2019/12/Carolina-Herrera-logo.png)` }} />
             </div>
 
+            <h1 className="principal-font title principal-font">MEJORES VENTAS</h1>
+
+            <Slider
+                {...bestSellsSettings}
+                className="slide-best-sells"
+            >
+                {mounts.map((frame, index) =>
+                    <Frame
+                        className="w-100"
+                        key={index}
+                        offer={false}
+                        discount={false}
+                        onHover={false}
+                        image={`https://firebasestorage.googleapis.com/v0/b/optica-809a9.appspot.com/o/${frame._id}_model.png?alt=media&token=2cc6b58c-a5fe-4688-83eb-8f0337e2e7cc`}
+                        frameInfo={frame}
+                    />
+                )}
+            </Slider>
+
+            <h1 className="principal-font title principal-font">LOS MEJORES DESCUENTOS</h1>
+
+            <Slider
+                {...bestSellsSettings}
+                className="slide-best-sells"
+                style={{ marginBottom: '150px' }}
+            >
+                {mounts.map((frame, index) =>
+                    <Frame
+                        className="w-100"
+                        key={index}
+                        offer={true}
+                        discount={true}
+                        onHover={false}
+                        image={`https://firebasestorage.googleapis.com/v0/b/optica-809a9.appspot.com/o/${frame._id}_model.png?alt=media&token=2cc6b58c-a5fe-4688-83eb-8f0337e2e7cc`}
+                        frameInfo={frame}
+                    />
+                )}
+            </Slider>
         </div >
     )
 }

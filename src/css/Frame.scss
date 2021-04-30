@@ -1,0 +1,55 @@
+@import "Config";
+
+.frame {
+    position: relative;
+    transition: background-color 0.25s ease-out;
+    width: 100%;
+
+    &:hover {
+        background-color: $shadow;
+    }
+
+    &:active {
+        background-color: $shadow-active;
+    }
+
+    .offer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: linear-gradient(45deg, rgba(255, 0, 0, 1) 0%, rgba(255, 100, 100, 1) 100%);
+        color: white;
+        font-weight: bold;
+        border-radius: 20px;
+        font-size: 0.75em;
+        padding: 0.5em 0.75em;
+        margin: 0.5em;
+    }
+
+    .thumb {
+        background-attachment: local;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center center;
+        width: 100%;
+        padding-bottom: 56.25%;
+        margin: 10px 0;
+    }
+
+    .info {
+        h5 {
+            text-align: center;
+        }
+        p {
+            text-align: center;
+
+            span {
+                text-decoration: line-through;
+            }
+
+            strong {
+                font-size: 20px;
+            }
+        }
+    }
+}

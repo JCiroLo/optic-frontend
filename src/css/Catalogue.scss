@@ -1,7 +1,7 @@
 @import "Config";
 
 .Catalogue {
-    min-height: calc(100vh - 72px);
+    min-height: calc(100vh - #{$navHeight});
 
     .filters {
         padding: 0.5rem 1.5rem;
@@ -14,7 +14,7 @@
                 height: 25px;
                 margin: 0.5rem;
                 cursor: pointer;
-                border-radius: 5px;
+                border-radius: 0.25em;
 
                 transition: all 0.25s;
 
@@ -56,6 +56,7 @@
                 display: flex;
                 justify-content: space-between;
                 cursor: pointer;
+                user-select: none;
 
                 transition: all 0.25s;
 
@@ -72,106 +73,166 @@
         height: 100%;
         margin-bottom: 100px;
 
-        .frame {
-            position: relative;
-            margin: 1rem 0;
+        .filter-actions {
+            margin: 1em 0;
+            padding: 0;
 
-            &::after {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: transparent;
-                z-index: 100;
-                border-radius: .25rem;
+            .search-bar {
+                position: relative;
+                margin: 0 0.5em;
+                min-width: 40%;
 
-                transition: all 0.25s;
-            }
+                input {
+                    width: 100%;
+                    padding: 0.75em 32px 0.25em 0;
+                    border-radius: 0;
+                    background-color: transparent;
+                    border: none;
+                    border-bottom: 1px solid $PrincipalColor;
 
-            &:hover {
-                .actions {
-                    opacity: 1;
-                }
-                &::after {
-                    background-color: #00000022;
-                    
-                }
-            }
+                    transition: border-color 0.1s ease-out;
 
-            span.offert {
-                position: absolute;
-                background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 50, 50, 1) 100%);
-                color: white;
-                font-weight: bold;
-                right: 0;
-                padding: 0.5rem 1rem;
-                border-radius: 0.25rem;
-                font-size: 10px;
-                margin: 1rem;
-            }
-
-            .thumb {
-                background-image: url("https://i.pinimg.com/originals/aa/36/ee/aa36ee97cfa992cff475fdeb7e7299b2.png");
-                background-attachment: local;
-                background-repeat: no-repeat;
-                background-size: contain;
-                background-position: center center;
-                width: 100%;
-                padding-bottom: 56.25%;
-                margin: 10px 0;
-            }
-
-            .info {
-                h5 {
-                    text-align: center;
-                }
-                p {
-                    text-align: center;
-
-                    span {
-                        text-decoration: line-through;
-                    }
-
-                    strong {
-                        font-size: 20px;
+                    &:focus {
+                        outline: none;
+                        border-color: $SecondaryColor;
                     }
                 }
+
+                input:focus + label,
+                label.active {
+                    transform: translate(-20%, -1rem) scale(0.8);
+                    color: $SecondaryColor;
+                }
+
+                input:focus ~ button {
+                    color: $SecondaryColor;
+                }
+
+                label {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    margin: 0;
+                    padding: 0.5em 0.5em 0.5em 0.5em;
+                    pointer-events: none;
+
+                    transition: all 0.1s ease-out;
+                }
+
+                button {
+                    position: absolute;
+                    display: flex;
+                    align-items: center;
+                    top: 50%;
+                    right: 0;
+                    padding: 0 0.25em;
+                    border: none;
+                    background-color: transparent;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+
+                    transform: translateY(-50%);
+
+                    transition: background-color 0.1s ease-out;
+
+                    &:active {
+                        background-color: $shadow;
+                    }
+                }
             }
 
-            .actions {
+            .results-info {
                 display: flex;
-                justify-content: center;
                 align-items: center;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                opacity: 0;
-                transition: opacity 0.25s;
+                margin-left: auto;
+                color: $SecondaryColor;
+                font-size: 14px;
+            }
 
-                .btn {
-                    border-radius: 0.25rem;
-                    background-image: linear-gradient(45deg, $SecondaryColor 50%, $PrincipalColor 50%);
-                    background-size: 250%;
-                    background-position: 0;
-                    background-repeat: no-repeat;
-                    color: white;
-                    border-radius: 0.25em;
-                    border: 0;
-                    z-index: 1000;
-                    transform: scale(1.5);
+            .sorting-dropdown {
+                position: relative;
+                margin: 0 0.5em 0 1em;
+                border: 1px solid $shadow-active;
+                border-radius: 0;
+                transition: background-color 0.25s ease-out;
 
-                    font-weight: bold;
+                &:hover {
+                    background-color: $shadow;
+                    cursor: pointer;
 
-                    transition: background-color 0.25s ease-out, background-position 0.1s ease-out;
+                    .dropdown-items {
+                        height: 200px;
+                        box-shadow: 0 0 15px $shadow-active;
 
-                    &:hover {
-                        color: white;
-                        background-position: 100%;
+                        opacity: 1;
                     }
+                }
+
+                .dropdown-title {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    border-radius: 0.25rem;
+                    padding: 0.375rem 0.5rem 0.375rem 0.75rem;
+                    height: 100%;
+                    width: 160px;
+
+                    span.material-icons {
+                        padding-left: 0.2em;
+                    }
+                }
+
+                .dropdown-items {
+                    position: absolute;
+                    opacity: 0;
+                    top: 100%;
+                    left: 0;
+                    z-index: 3000;
+                    height: 0;
+                    width: 100%;
+                    background-color: white;
+                    overflow-y: hidden;
+                    border: 2px solid $shadow;
+                    user-select: none;
+
+                    transition: height 0.1s ease-out;
+
+                    .dropdown-action {
+                        padding: 0.5em 0.75em;
+
+                        transition: background-color 0.25s ease-out;
+
+                        &:hover {
+                            background-color: $shadow-active;
+                        }
+
+                        &:active {
+                            background-color: $shadow;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 767.98px) {
+    .Catalogue {
+        .shop {
+            .filter-actions {
+                justify-content: space-between;
+
+                .search-bar {
+                    width: 100%;
+                }
+
+                .results-info {
+                    margin: 1em 0.5em 0 0.5em;
+                }
+
+                .sorting-dropdown {
+                    margin-top: 1em;
                 }
             }
         }

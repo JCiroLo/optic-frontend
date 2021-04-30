@@ -1,3 +1,5 @@
+@import "Config";
+
 .Home {
     .carousel-image {
         width: 100vw;
@@ -11,13 +13,13 @@
     .title {
         font-weight: bold;
         text-align: center;
-        margin: 50px 0 25px 0;
+        margin: 1em 0;
     }
 
     .glass-categories:hover .glasses:not(:hover) {
         flex-basis: 25%;
 
-        transition: flex-basis .25s;
+        transition: flex-basis 0.25s;
     }
 
     .glass-categories {
@@ -83,69 +85,17 @@
         }
     }
 
-    .slick-list {
-        height: 100%;
-        .slick-track {
-            height: 100%;
-
-            .slick-slide {
-                height: 200px !important;
-                border: 1px solid #99999999;
-
-                div {
-                    height: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 10px 0;
-
-                    img {
-                        width: 80%;
-                    }
-
-                    h5 {
-                        letter-spacing: 2px;
-                        font-weight: bold;
-                    }
-                }
-            }
-        }
-    }
-
-    .slick-prev {
-        left: 3% !important;
-        z-index: 1;
-        transform: scale(1.5);
-
-        &::before {
-            color: black;
-        }
-    }
-
-    .slick-next {
-        right: 3% !important;
-        z-index: 1;
-        transform: scale(1.5);
-
-        &::before {
-            color: black;
-        }
-    }
-
-    .slide-shop {
-        background-image: url(https://img.freepik.com/vector-gratis/fondo-blanco-sutil-lineas-diagonales_1017-14763.jpg?size=626&ext=jpg);
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-    }
-
     .brands {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        margin-bottom: 40px;
+
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+
+        border: 1px solid $shadow-active;
 
         .image {
             flex: 0 1 25%;
@@ -158,11 +108,22 @@
             transition: background-size 0.25s;
 
             &:hover {
-                background-size: 75%;
+                background-size: 60%;
             }
         }
     }
 
+    .slide-best-sells {
+        .slick-list {
+            .slick-slide {
+                transition: background-color 0.2s ease-out;
+
+                &:hover {
+                    background-color: $shadow;
+                }
+            }
+        }
+    }
 }
 
 // Mid devices

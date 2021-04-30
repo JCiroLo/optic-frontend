@@ -36,3 +36,11 @@ export const deleteGlasses = async id => {
         return { stateAction: false }
     }
 }
+export const getMount = async id => {
+    try {
+        const { data } = await axios.get(`${API_URL}/glasses/${id}`);
+        return data;
+    } catch (e) {
+        return { stateAction: false }
+    }
+}
