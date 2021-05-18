@@ -1,0 +1,56 @@
+@import "Config";
+
+.parent-toggler {
+    &.active {
+        .btn-toggler {
+            $dist: 0.4rem;
+            
+            span.top {
+                transform: rotate(45deg) translate($dist, $dist);
+            }
+            span.mid {
+                opacity: 0;
+            }
+            span.bot {
+                transform: rotate(-45deg) translate($dist, -$dist);
+            }
+        }
+    }
+
+    .btn-toggler {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        padding: 0;
+        margin: 0 0.5rem;
+        margin-left: 1.5rem;
+        height: 30px;
+        border-radius: 50px;
+
+        transition: background-color 0.25s ease-out;
+
+        &:active {
+            background-color: $shadow-active;
+        }
+
+        span {
+            height: 1px;
+            width: 30px;
+
+            background-color: $SecondaryColor;
+
+            transition: opacity 0.25s ease-out;
+            transition: transform 0.25s ease-out;
+        }
+
+        span.top {
+            transform: rotate(0) translate(0, 0);
+        }
+        span.mid {
+            opacity: 1;
+        }
+        span.bot {
+            transform: rotate(0) translate(0, 0);
+        }
+    }
+}

@@ -1,16 +1,27 @@
 @import "Config";
 
 .Catalogue {
-    min-height: calc(100vh - #{$navHeight});
+    min-height: calc(100vh);
 
     .filters {
         padding: 0.5rem 1.5rem;
+        border-right: 1px solid $shadow-active;
+
+        transition: all 0.25s ease-out;
+
+        &.active {
+            max-width: 0;
+            flex: 0 0 0;
+            opacity: 0;
+            padding: 0;
+            border: 0;
+        }
 
         .colors {
             margin-bottom: 2rem;
 
             span {
-                max-width: 20px;
+                max-width: 30px;
                 height: 25px;
                 margin: 0.5rem;
                 cursor: pointer;
@@ -18,32 +29,21 @@
 
                 transition: all 0.25s;
 
+                &.material-icons {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    font-weight: bold;
+
+                    color: tomato;
+
+                    box-shadow: 0 0 0 1px tomato;
+                }
+
                 &:hover {
                     transform: scale(1.25);
                 }
-            }
-            .red {
-                background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 28, 120, 1) 100%);
-            }
-
-            .white {
-                border: 1px solid $shadow;
-            }
-
-            .gold {
-                background: linear-gradient(45deg, rgba(255, 188, 0, 1) 0%, rgba(255, 245, 28, 1) 100%);
-            }
-
-            .violet {
-                background: linear-gradient(45deg, rgba(255, 0, 206, 1) 0%, rgba(255, 28, 131, 1) 100%);
-            }
-
-            .black {
-                background-color: black;
-            }
-
-            .green {
-                background: linear-gradient(45deg, rgba(0, 87, 7, 1) 0%, rgba(82, 255, 28, 1) 100%);
             }
         }
 
@@ -68,56 +68,82 @@
     }
 
     .shop {
-        padding: 0.5rem 1rem;
         flex-wrap: wrap;
+        padding: 0.5rem 0;
+
         height: 100%;
         margin-bottom: 100px;
 
+        transition: all 0.25s ease-out;
+
+        &.active {
+            max-width: 100%;
+            flex: 0 0 100%;
+
+            .filter-actions {
+                .btn-toggler {
+                    span.top {
+                        transform: rotate(0) translate(0, 0);
+                    }
+                    span.mid {
+                        opacity: 1;
+                    }
+                    span.bot {
+                        transform: rotate(0) translate(0, 0);
+                    }
+                }
+            }
+        }
+
         .filter-actions {
+            align-items: center;
             margin: 1em 0;
             padding: 0;
+
+            .btn-toggler {
+                display: flex;
+                justify-content: space-around;
+                flex-direction: column;
+                padding: 0;
+                margin: 0 0.5rem;
+                margin-left: 1.5rem;
+                height: 30px;
+                border-radius: 50px;
+
+                $dist: 0.4rem;
+
+                transition: background-color .25s ease-out;
+
+                &:active{
+                    background-color: $shadow-active;
+                }
+
+                span {
+                    height: 1px;
+                    width: 30px;
+                    
+                    background-color: $SecondaryColor;
+
+                    transition: opacity 0.25s ease-out;
+                    transition: transform 0.25s ease-out;
+                }
+
+                span.top {
+                    transform: rotate(45deg) translate($dist, $dist);
+                }
+                span.mid {
+                    opacity: 0;
+                }
+                span.bot {
+                    transform: rotate(-45deg) translate($dist, -$dist);
+                }
+            }
 
             .search-bar {
                 position: relative;
                 margin: 0 0.5em;
+                margin-right: auto;
                 min-width: 40%;
-
-                input {
-                    width: 100%;
-                    padding: 0.75em 32px 0.25em 0;
-                    border-radius: 0;
-                    background-color: transparent;
-                    border: none;
-                    border-bottom: 1px solid $PrincipalColor;
-
-                    transition: border-color 0.1s ease-out;
-
-                    &:focus {
-                        outline: none;
-                        border-color: $SecondaryColor;
-                    }
-                }
-
-                input:focus + label,
-                label.active {
-                    transform: translate(-20%, -1rem) scale(0.8);
-                    color: $SecondaryColor;
-                }
-
-                input:focus ~ button {
-                    color: $SecondaryColor;
-                }
-
-                label {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    margin: 0;
-                    padding: 0.5em 0.5em 0.5em 0.5em;
-                    pointer-events: none;
-
-                    transition: all 0.1s ease-out;
-                }
 
                 button {
                     position: absolute;
@@ -131,6 +157,7 @@
                     width: 30px;
                     height: 30px;
                     border-radius: 50%;
+                    color: $SecondaryColor;
 
                     transform: translateY(-50%);
 
@@ -142,10 +169,10 @@
                 }
             }
 
-            .results-info {
+            .filter-info {
                 display: flex;
                 align-items: center;
-                margin-left: auto;
+                margin-left: 1em;
                 color: $SecondaryColor;
                 font-size: 14px;
             }
@@ -155,6 +182,7 @@
                 margin: 0 0.5em 0 1em;
                 border: 1px solid $shadow-active;
                 border-radius: 0;
+
                 transition: background-color 0.25s ease-out;
 
                 &:hover {
@@ -162,10 +190,17 @@
                     cursor: pointer;
 
                     .dropdown-items {
-                        height: 200px;
                         box-shadow: 0 0 15px $shadow-active;
-
+                        font-size: initial;
                         opacity: 1;
+
+                        transition: font-size 0.25s, opacity 0.5s 0.25s;
+
+                        .dropdown-action {
+                            padding: 0.5em 0.75em;
+
+                            transition: padding 0.25s;
+                        }
                     }
                 }
 
@@ -176,7 +211,10 @@
                     border-radius: 0.25rem;
                     padding: 0.375rem 0.5rem 0.375rem 0.75rem;
                     height: 100%;
-                    width: 160px;
+                    width: 200px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
 
                     span.material-icons {
                         padding-left: 0.2em;
@@ -189,19 +227,21 @@
                     top: 100%;
                     left: 0;
                     z-index: 3000;
-                    height: 0;
+                    height: initial;
                     width: 100%;
                     background-color: white;
                     overflow-y: hidden;
                     border: 2px solid $shadow;
                     user-select: none;
 
-                    transition: height 0.1s ease-out;
+                    font-size: 0;
+
+                    transition: opacity 0.25s, font-size 0.5s 0.25s;
 
                     .dropdown-action {
-                        padding: 0.5em 0.75em;
+                        padding: 0;
 
-                        transition: background-color 0.25s ease-out;
+                        transition: background-color 0.25s, padding 0.5s 0.25s;
 
                         &:hover {
                             background-color: $shadow-active;
@@ -212,6 +252,22 @@
                         }
                     }
                 }
+            }
+        }
+
+        .no-results {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px auto;
+
+            color: $SecondaryColor;
+
+            span {
+                font-size: 3em;
+            }
+            p {
+                font-size: 2em;
             }
         }
     }

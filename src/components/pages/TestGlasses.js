@@ -255,7 +255,7 @@ const TestGlasses = ({ navbarHeight = 72.250 }) => {
             }
             {cameraState === 0 &&
                 <>
-                    <div class="glitch-wrapper row mx-0">
+                    <div className="glitch-wrapper row mx-0">
                         <span className="material-icons">videocam_off</span>
                         <div className="glitch" data-text="Error :(">Error :(</div>
                         <h4>Puede ser debido a:</h4>

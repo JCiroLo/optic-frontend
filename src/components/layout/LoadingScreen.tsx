@@ -1,6 +1,6 @@
-import React from 'react'
+import { FC } from 'react'
 
-const LoadingScreen = () => {
+const LoadingScreen: FC = () => {
     return (
         <div className="loading">
             <div className="spinner-border" role="status">
@@ -10,4 +10,4 @@ const LoadingScreen = () => {
     )
 }
 
-export default LoadingScreen
+export default LoadingScreen;

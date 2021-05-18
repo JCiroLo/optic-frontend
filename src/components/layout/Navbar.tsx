@@ -1,48 +1,48 @@
-import React, { useEffect } from 'react'
+import { FC, useState, /* useCallback */ } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import classnames from 'classnames'
 
-import useEventListener from '../utils/useEventListener'
+//import useEventListener from '../utils/useEventListener'
+import ButtonToggler from './ButtonToggler';
 import '../../css/Navbar.scss'
-import favicon from '../../testPics/favicon.png'
+import navBrand from '../../testPics/nav_brand.png'
 
-const Navbar = () => {
-    const [toggleNav, settoggleNav] = React.useState(false);
-    const [scrollCoord, setScrollCoord] = React.useState(0);
+const Navbar: FC = () => {
+    const [toggleNav, settoggleNav] = useState(false);
+    //const [scrollCoord, setScrollCoord] = useState(0);
 
-    const scrollHandler = React.useCallback(
-        (event) => {
-            setScrollCoord(event.target.scrollingElement.scrollTop)
-        }, [setScrollCoord]
-    )
+    /* const scrollHandler = useCallback((event) => {
+        setScrollCoord(event.target.scrollingElement.scrollTop)
+    }, [setScrollCoord]
+    ) */
 
     const toggleCollpase = () => {
-        !toggleNav ? document.body.classList.add("fix-overflow") : document.body.classList.remove("fix-overflow");
+        !toggleNav ?
+            document.body.classList.add("fix-overflow") :
+            document.body.classList.remove("fix-overflow");
         settoggleNav(!toggleNav);
     }
 
-    useEventListener('scroll', scrollHandler)
+    //useEventListener('scroll', scrollHandler)
 
     return (
         <nav className={
             classnames("navbar navbar-expand-md fixed-top r-font", {
-                "scrolling": scrollCoord > 100,
+                /* "scrolling": scrollCoord > 100, */
                 "collapsed": toggleNav
             })
         } >
             <Link className="navbar-brand principal-font" to="/">
-                <img src={favicon} alt="favicon" />
-                    Optic
+                <img src={navBrand} alt="nav_brand" />
             </Link>
 
             {/* Search bar */}
 
-            <button
-                className="navbar-toggler toggler"
-                onClick={() => toggleCollpase()}
-            >
-                <span className="material-icons">{toggleNav ? 'close' : 'menu'}</span>
-            </button>
+            <ButtonToggler
+                className="navbar-toggler"
+                state={toggleNav}
+                onClick={toggleCollpase}
+            />
 
             <div className="navbar-collapse">
                 <div className="nav-links navbar-nav principal-font">
@@ -74,11 +74,11 @@ const Navbar = () => {
                         className="nav-brand"
                         to="/"
                         onClick={() => toggleNav && toggleCollpase()}
-                    ><img src={favicon} alt="favicon" /> Optic</NavLink>
+                    ><img src={navBrand} alt="favicon" /></NavLink>
                 </div>
             </div>
         </nav >
     )
 }
 
-export default Navbar
+export default Navbar;

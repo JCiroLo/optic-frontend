@@ -1,0 +1,130 @@
+@import "Config";
+
+.custom-form {
+    position: relative;
+    margin: 0;
+    padding: 0 !important;
+    height: auto;
+
+    input:focus + label,
+    textarea:focus + label,
+    label.active {
+        transform: translate(-0.5rem, -0.75rem);
+        font-size: 12px;
+    }
+
+    input:focus ~ span,
+    textarea:focus ~ span,
+    select:focus ~ span {
+        left: 0;
+        right: 0;
+        opacity: 1;
+
+        transition: all 0.25s ease-out;
+    }
+
+    input:focus + label,
+    textarea:focus + label {
+        color: $PremiumColorBack;
+    }
+
+    input:focus ~ button {
+        color: $PrincipalColor;
+    }
+
+    label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0.5rem;
+        pointer-events: none;
+        color: $SecondaryColor;
+
+        transition: all 0.1s ease-out;
+    }
+
+    span {
+        position: absolute;
+
+        top: 100%;
+        left: 50%;
+        right: 50%;
+        opacity: 0;
+        height: 1px;
+        background-color: $PremiumColorBack;
+
+        transition: transform 0s, opacity 0.25s ease-out;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 0.75rem 0.5rem 0.25rem 0.5rem;
+        border-radius: 0;
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px inset $SecondaryColor;
+
+        transition: all 0.25s ease-out;
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+            border-color: $PremiumColorBack;
+        }
+
+        &.active {
+            border-color: $PremiumColorBack;
+            color: $PremiumColorBack;
+        }
+
+        &.invalid {
+            border-color: tomato;
+            color: tomato;
+        }
+    }
+
+    input[type="text"] {
+        padding-right: 32px;
+    }
+
+    select {
+        outline: none;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid $muted;
+        padding: 0.75rem 0.5rem 0.25rem 0.5rem;
+        color: white;
+
+        text-transform: capitalize;
+
+        transition: all 0.25s;
+
+        option {
+            color: $SecondaryColor;
+
+            &:checked {
+                color: $PremiumColorBack;
+            }
+        }
+
+        &:focus {
+            box-shadow: 0 0 transparent;
+            border-color: $PremiumColorBack;
+        }
+
+        &.active {
+            border-color: $PremiumColorBack;
+            color: $PremiumColorBack;
+
+            :not(option:checked) {
+                color: $SecondaryColor;
+            }
+        }
+    }
+
+    textarea {
+        border-right: 1px inset $SecondaryColor;
+    }
+}

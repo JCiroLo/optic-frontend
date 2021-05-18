@@ -1,7 +1,7 @@
-import React from 'react';
+import { FC } from 'react';
 import '../../css/Footer.scss';
 
-const Footer = () =>
+const Footer: FC = () =>
     <footer className="text-lg-start principal-font">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#18161cdd" fillOpacity="1" d="M0,288L80,277.3C160,267,320,245,480,250.7C640,256,800,288,960,293.3C1120,299,1280,277,1360,266.7L1440,256L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#18161cbb" fillOpacity="1" d="M0,288L80,293.3C160,299,320,309,480,309.3C640,309,800,299,960,282.7C1120,267,1280,245,1360,234.7L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path></svg>
@@ -110,4 +110,4 @@ const Footer = () =>
         </div>
     </footer>
 
-export default Footer
+export default Footer;

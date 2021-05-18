@@ -3,14 +3,20 @@ import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 
 import { getAllGlasses } from '../utils/Actions';
-import LoadingScreen from '../layout/LoadingScreen';
+import LoadingScreen from './LoadingScreen';
 
 import '../../css/Mounts.scss';
 
+/* interface MountsProps {
+    onChange: React.ChangeEventHandler,
+    toggleVisibility: Function,
+    visibility: boolean
+}
+ */
 const useOutsideAlerter = (ref, hideFunction) => {
     useEffect(() => {
-        function handleClickOutside(event) {
-            if (ref.current && !ref.current.contains(event.target)) {
+        const handleClickOutside = (event) => {
+            if (ref.current !== null && !ref.current.contains(event.target)) {
                 hideFunction(false)
                 document.body.classList.remove("fix-overflow");
             }
@@ -22,7 +28,7 @@ const useOutsideAlerter = (ref, hideFunction) => {
     }, [ref, hideFunction]);
 }
 
-function Mounts({ onChange, toggleVisibility, visibility }) {
+const Mounts/* : FC<MountsProps> */ = ({ onChange, toggleVisibility, visibility }) => {
     const [selectedId, setSelectedId] = useState(null);
     const [mounts, setMounts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -35,7 +41,7 @@ function Mounts({ onChange, toggleVisibility, visibility }) {
         })()
     }, [])
 
-    const mountSelectorRef = useRef(null)
+    const mountSelectorRef = useRef(null);
 
     useOutsideAlerter(mountSelectorRef, toggleVisibility)
 

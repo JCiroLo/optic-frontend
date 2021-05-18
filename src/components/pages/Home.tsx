@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import Slider from "react-slick";
 
 import SlickCustomArrow from '../layout/SlickCustomArrow';
 import { getAllGlasses } from '../utils/Actions';
 import Frame from '../layout/Frame';
+import { FrameType } from '../utils/Consts';
 
 import Pic1 from '../../testPics/carousel-1.jpg';
 import Pic2 from '../../testPics/carousel-2.jpg';
@@ -14,11 +15,10 @@ import mGlass from '../../testPics/men-glass.jpg';
 import cGlass from '../../testPics/children-glass.jpg';
 import sliderBackground from '../../testPics/sliderBackground.jpg';
 
-
 import '../../css/Home.scss';
 
-const Home = () => {
-    const [mounts, setMounts] = useState([]);
+const Home: FC = () => {
+    const [mounts, setMounts] = useState<FrameType[]>([]);
 
     useEffect(() => {
         document.title = 'Optica';
@@ -34,8 +34,8 @@ const Home = () => {
         infinite: false,
         slidesToShow: 5,
         slidesToScroll: 1,
-        prevArrow: <SlickCustomArrow styleName={{ left: '0', transform: 'rotate(180deg)' }} />,
-        nextArrow: <SlickCustomArrow styleName={{ right: '0' }} />,
+        prevArrow: <SlickCustomArrow styles={{ left: '0', transform: 'rotate(180deg)' }} />,
+        nextArrow: <SlickCustomArrow styles={{ right: '0' }} />,
         responsive: [
             {
                 breakpoint: 992,
@@ -49,7 +49,7 @@ const Home = () => {
     };
 
     return (
-        <div className="Home">
+        <div className="Home mb-5">
             <Carousel
                 autoPlay
                 stopOnHover
@@ -101,9 +101,6 @@ const Home = () => {
                     <Frame
                         className="w-100"
                         key={index}
-                        offer={false}
-                        discount={false}
-                        onHover={false}
                         image={`https://firebasestorage.googleapis.com/v0/b/optica-809a9.appspot.com/o/${frame._id}_model.png?alt=media&token=2cc6b58c-a5fe-4688-83eb-8f0337e2e7cc`}
                         frameInfo={frame}
                     />
@@ -118,12 +115,9 @@ const Home = () => {
                 style={{ marginBottom: '150px' }}
             >
                 {mounts.map((frame, index) =>
-                    <Frame
+                    frame.discount > 0 && <Frame
                         className="w-100"
                         key={index}
-                        offer={true}
-                        discount={true}
-                        onHover={false}
                         image={`https://firebasestorage.googleapis.com/v0/b/optica-809a9.appspot.com/o/${frame._id}_model.png?alt=media&token=2cc6b58c-a5fe-4688-83eb-8f0337e2e7cc`}
                         frameInfo={frame}
                     />

@@ -12,54 +12,45 @@
         justify-content: center;
         align-self: flex-start;
         align-items: center;
-
-        .slick-slider {
-            width: 90%;
-
-            .slick-list {
-                .slick-track {
-                    display: flex;
-                    align-items: center;
-                }
-            }
-
-            .slick-prev:before,
-            .slick-next:before {
-                color: black;
-            }
-        }
     }
 
     .detail-content {
-        .btn-outlined {
-            padding: 0.5em 0.75em;
-            margin: 0 0.25em;
-            font-size: 1.25em;
-
-            span.material-icons {
-                padding-right: 0.5em;
-            }
+        small {
+            text-decoration: line-through;
+            -webkit-text-stroke-color: $PremiumColorBack;
+            -webkit-text-stroke-width: 0.5px;
         }
 
-        .btn-action {
-            display: flex;
-            align-items: center;
+        .actions { 
+            .btn-shop {
+                display: flex;
+                align-items: center;
 
-            padding: 0.5em 0.75em;
-            margin: 0 0.25em;
+                padding: 0.5em 0.75em;
 
-            border: 3px solid $PremiumColorBack;
-            color: $PremiumColorBack;
-            font-size: 1.25em;
+                border: 3px solid $PremiumColorBack;
+                color: $PremiumColorBack;
+                font-size: 1.25em;
 
-            span.material-icons {
-                padding-right: 0.5em;
+                span.material-icons {
+                    padding-right: 0.5em;
+                }
+
+                &:hover {
+                    color: white;
+                    background-color: $PremiumColorBack;
+                    border-color: $PremiumColorBack;
+                }
             }
+            .text-premium,
+            .text-muted {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
 
-            &:hover {
-                color: white;
-                background-color: $PremiumColorBack;
-                border-color: $PremiumColorBack;
+                .material-icons {
+                    margin: 0.25em 0.5em;
+                }
             }
         }
     }
