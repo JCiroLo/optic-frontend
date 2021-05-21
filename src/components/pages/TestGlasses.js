@@ -110,10 +110,10 @@ const getResponsiveDimensions = ({ width, height }, navbarHeight) => {
     return { width: stageWidth, height: stageHeight };
 }
 
-const TestGlasses = ({ navbarHeight = 72.250 }) => {
+const TestGlasses = ({ navbarHeight = 75, history }) => {
     const [stageDims, setStageDims] = useState({ width: 0, height: 0 });
     const [selectedId, selectShape] = useState(null);
-    const [selectedMount, setSelectedMount] = useState(null);
+    const [selectedMount, setSelectedMount] = useState(history.location.state !== null ? `https://firebasestorage.googleapis.com/v0/b/optica-809a9.appspot.com/o/${history.location.state.frame}_testing.png?alt=media&token=2cc6b58c-a5fe-4688-83eb-8f0337e2e7cc` : null);
     const [uploadedPhoto, setUploadedPhoto] = useState(null);
     const [cameraState, setCameraState] = useState(1); // 0:Denied, 1:Questing ,2:Loading, 3:Allowed, 4:Photo
     const [loadingCamera, setLoadingCamera] = useState(false);
@@ -128,9 +128,8 @@ const TestGlasses = ({ navbarHeight = 72.250 }) => {
 
     const [image] = useImage(selectedMount);
 
-    document.title = "Probar monturas";
-
     useEffect(() => {
+        document.title = "Probar monturas";
         if (cameraState === 3) {
 
             const cameraWidth = webcamRef.current.video.videoWidth;
@@ -203,18 +202,41 @@ const TestGlasses = ({ navbarHeight = 72.250 }) => {
         const { url } = await getPhotoURL(e.target.files[0]);
         const { width, height } = await getPhotoDimensions(url);
 
+        const trueDimensions = getResponsiveDimensions({ width, height }, navbarHeight);
+
+        // Esta es una medida lanzada al aire, comprobar si funciona para cualquier tipo de pantalla
+        const adaptableFrameWidth = trueDimensions.width / 2;
+
+        setPic({
+            x: (trueDimensions.width / 2) - (adaptableFrameWidth / 2),
+            y: (trueDimensions.height / 2) - ((adaptableFrameWidth / (16 / 9)) / 2),
+            width: adaptableFrameWidth,
+            height: adaptableFrameWidth / (16 / 9)
+        });
+
         setCameraState(4);
         setUploadedPhoto(url);
-        setStageDims(getResponsiveDimensions({ width, height }, navbarHeight));
+        setStageDims(trueDimensions);
     }
 
     const HandleUseTestPic = async () => {
         const url = 'https://image.freepik.com/free-photo/portrait-young-beautiful-woman-with-fresh-clean-skin-isolated-white_186202-1721.jpg';
         const { width, height } = await getPhotoDimensions(url);
 
+        const trueDimensions = getResponsiveDimensions({ width, height }, navbarHeight);
+
+        const adaptableFrameWidth = trueDimensions.width / 2.5;
+
+        setPic({
+            x: (trueDimensions.width / 2) - (adaptableFrameWidth / 2),
+            y: (trueDimensions.height / 2) - ((adaptableFrameWidth / (16 / 9)) / 2),
+            width: adaptableFrameWidth,
+            height: adaptableFrameWidth / (16 / 9)
+        });
+
         setCameraState(4);
         setUploadedPhoto(url);
-        setStageDims(getResponsiveDimensions({ width, height }, navbarHeight));
+        setStageDims(trueDimensions);
     }
 
     const resetValues = () => {

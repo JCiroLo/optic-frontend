@@ -30,8 +30,7 @@ nav {
         align-items: center;
 
         height: 100%;
-        max-width: 75%;
-        padding: 0 0.5em;
+        margin: 0 0.5em;
 
         font-size: 24px;
         font-weight: 700;
@@ -41,10 +40,9 @@ nav {
         img {
             max-height: 100%;
             max-width: 100%;
-            padding: 0.25em;
-            margin-right: 0.5em;
         }
     }
+
     .navbar-collapse {
         height: 100%;
         justify-content: space-between;
@@ -133,23 +131,46 @@ nav {
             }
 
             .navbar-collapse {
-                background-color: #fff;
                 opacity: 1;
-                transition: opacity 0.2s ease-in, transform 0.1s ease-in;
                 transform: translateX(0);
+
+                transition: opacity 0.2s ease-out, transform 0.1s ease-out;
+
+                .nav-links {
+                    @for $child from 1 through 5 {
+                        a:nth-child(#{$child}) {
+                            transform: translateX(0);
+
+                            transition: transform 0.25s #{$child / 40}s;
+                        }
+                    }
+                }
             }
         }
 
-        .navbar-brand{
+        .navbar-brand {
             padding: 0;
+            margin: 0 0.5em;
+
+            flex: 0 0 50%;
+            align-self: center;
+
+            img {
+                padding: 0;
+                margin: 0;
+            }
         }
 
         .navbar-toggler {
-            margin-right: 0.5em;
+            flex: 0 0 30px;
+            padding: 0;
+            margin: 0 0.75em;
         }
 
         .navbar-collapse {
             position: fixed;
+            overflow-y: auto;
+            overflow-x: hidden;
             left: 0;
             right: 0;
             top: $navHeight;
@@ -157,15 +178,14 @@ nav {
             height: calc(100vh - #{$navHeight});
 
             transform: translateX(100%);
-            padding-bottom: 10px;
             opacity: 0;
             background-color: #fff;
 
-            transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+            transition: opacity 0.25s ease-out, transform 0.1s ease-out;
 
             .nav-links {
-                overflow-y: auto;
-                padding: 0 16px;
+                height: 90%;
+                padding: 0 0.5em;
                 font-size: 1.5em;
 
                 a {
@@ -174,14 +194,15 @@ nav {
                     color: $SecondaryColor;
                     align-items: center;
 
+                    transform: translateX(50%);
+
                     i {
                         display: inline;
                         font-size: 1.5em;
                         margin-right: 1rem;
                     }
 
-                    &:not(.nav-brand).active {
-                        position: relative;
+                    &.active {
                         color: $PrincipalColor;
 
                         transition: background-color 0.1s ease-out;
@@ -195,20 +216,21 @@ nav {
                         }
                     }
                     &.btn-premium {
-                        display: flex;
-                        justify-content: center;
-                        margin: 12px auto;
-                        width: 80%;
+                        span::before {
+                            height: 0;
+                        }
                     }
                 }
 
                 .nav-brand {
-                    display: block;
+                    display: flex;
+                    justify-content: center;
                     width: auto;
                     margin: auto auto 0 auto;
+                    padding: 0;
 
                     img {
-                        width: 3em;
+                        max-width: 66%;
                     }
                 }
             }

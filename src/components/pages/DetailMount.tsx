@@ -10,9 +10,12 @@ import Error from '../layout/Error';
 
 import '../../css/DetailMount.scss';
 
-interface DetailMountProps { match: { params: { id: string } } }
+interface DetailMountProps {
+    match: { params: { id: string } },
+    history: { push: Function }
+}
 
-const DetailMount: FC<DetailMountProps> = ({ match }) => {
+const DetailMount: FC<DetailMountProps> = ({ match, history }) => {
     const [loading, setLoading] = useState(true);
     const [mountDetail, setMountDetail] = useState<FrameType>({
         _id: '', brand: '', color: 'no', shape: 'no', material: 'no', price: 0, description: '', discount: 0, createdAt: new Date(0), updatedAt: new Date(0)
@@ -58,6 +61,10 @@ const DetailMount: FC<DetailMountProps> = ({ match }) => {
         return text.replaceAll('-', ' ● ');
     }
 
+    const testFrame = () => {
+        history.push({ pathname: "/test", state: { frame: mountDetail._id } })
+    }
+
     return (
         <div className="DetailMount">
             {loading && <LoadingScreen />}
@@ -91,8 +98,9 @@ const DetailMount: FC<DetailMountProps> = ({ match }) => {
                         <h3 className="text-uppercase font-weight-bold principal-font">{mountDetail.brand}</h3>
                         <h4 className="font-weight-bold">Forma: <span className="font-weight-normal">{formatText(mountDetail.shape)}</span></h4>
                         <h4 className="font-weight-bold">Material: <span className="font-weight-normal">{formatText(mountDetail.material)}</span></h4>
-                        <h4 className="font-weight-bold ">Color: {COLORS.map(({ color, style }) =>
+                        <h4 className="font-weight-bold ">Color: {COLORS.map(({ color, style }, index) =>
                             mountDetail.color === color && <span
+                                key={index}
                                 className="col-1 rounded-circle mx-2"
                                 style={style}
                             />
@@ -119,7 +127,7 @@ const DetailMount: FC<DetailMountProps> = ({ match }) => {
                             </span> Comprar ahora
                             </button>
 
-                            <div className="text-premium" onClick={() => alert('Probando')}>
+                            <div className="text-premium" onClick={testFrame}>
                                 <span className="material-icons">
                                     face
                             </span> <span>Probar montura</span>

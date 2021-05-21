@@ -63,12 +63,12 @@ const Navbar: FC = () => {
                         onClick={() => toggleNav && toggleCollpase()}
                     ><i className="material-icons">info</i> <span>Otras cosas</span></NavLink>
                     <NavLink
-                        to="/probar"
+                        to="/test"
                         className="btn-premium"
                         activeClassName="active"
                         onClick={() => toggleNav && toggleCollpase()}
                     >
-                        <span>Prueba tus gafas</span>
+                        <i className="material-icons">face</i> <span>Prueba tus gafas</span>
                     </NavLink>
                     <NavLink
                         className="nav-brand"

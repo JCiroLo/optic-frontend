@@ -1,20 +1,57 @@
 @import "Config";
 
 .Catalogue {
+    position: relative;
     min-height: calc(100vh);
+    justify-content: flex-end;
 
     .filters {
+        position: absolute;
+        z-index: 1;
         padding: 0.5rem 1.5rem;
         border-right: 1px solid $shadow-active;
+        width: 25%;
+        left: 0;
+        top: 0;
+
+        transform: translateX(0);
 
         transition: all 0.25s ease-out;
 
+        @for $child from 1 through 9 {
+            & > :nth-child(#{$child}) {
+                transform: translateX(0);
+
+                transition: transform 0.25s #{$child / 40}s;
+            }
+        }
+
         &.active {
-            max-width: 0;
-            flex: 0 0 0;
-            opacity: 0;
+            opacity: 1;
             padding: 0;
             border: 0;
+
+            strong {
+                opacity: 0;
+            }
+
+            @for $child from 1 through 9 {
+                & > :nth-child(#{$child}) {
+                    transform: translateX(-100%);
+                }
+            }
+
+            transform: translateX(-100%);
+        }
+
+        strong {
+            opacity: 1;
+
+            transition: opacity .1s ease-out; 
+        }
+
+        .btn-open-filters-mobile{
+            display: none;
         }
 
         .colors {
@@ -69,30 +106,15 @@
 
     .shop {
         flex-wrap: wrap;
-        padding: 0.5rem 0;
-
         height: 100%;
-        margin-bottom: 100px;
+        padding: 0.5rem 0;
+        margin: 0 0 100px 0;
+        width: 75%;
 
-        transition: all 0.25s ease-out;
+        transition: all 0.15s ease-out;
 
         &.active {
-            max-width: 100%;
-            flex: 0 0 100%;
-
-            .filter-actions {
-                .btn-toggler {
-                    span.top {
-                        transform: rotate(0) translate(0, 0);
-                    }
-                    span.mid {
-                        opacity: 1;
-                    }
-                    span.bot {
-                        transform: rotate(0) translate(0, 0);
-                    }
-                }
-            }
+            width: 100%;
         }
 
         .filter-actions {
@@ -100,43 +122,8 @@
             margin: 1em 0;
             padding: 0;
 
-            .btn-toggler {
-                display: flex;
-                justify-content: space-around;
-                flex-direction: column;
-                padding: 0;
-                margin: 0 0.5rem;
-                margin-left: 1.5rem;
-                height: 30px;
-                border-radius: 50px;
-
-                $dist: 0.4rem;
-
-                transition: background-color .25s ease-out;
-
-                &:active{
-                    background-color: $shadow-active;
-                }
-
-                span {
-                    height: 1px;
-                    width: 30px;
-                    
-                    background-color: $SecondaryColor;
-
-                    transition: opacity 0.25s ease-out;
-                    transition: transform 0.25s ease-out;
-                }
-
-                span.top {
-                    transform: rotate(45deg) translate($dist, $dist);
-                }
-                span.mid {
-                    opacity: 0;
-                }
-                span.bot {
-                    transform: rotate(-45deg) translate($dist, -$dist);
-                }
+            .btn-open-filters {
+                margin: 0 1.5rem;
             }
 
             .search-bar {
@@ -275,12 +262,38 @@
 
 @media (max-width: 767.98px) {
     .Catalogue {
+        .filters{
+            width: 100%;
+            background-color: white;
+
+            &.active{
+                background-color: transparent;
+            }
+
+            .btn-open-filters-mobile{
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                z-index: 1;
+            }
+        }
         .shop {
+            width: 100%;
+
             .filter-actions {
-                justify-content: space-between;
+                justify-content: center;
+                margin: 0;
+
+                .btn-open-filters {
+                    margin: 0 auto 0 1rem;
+                    order: 0;
+                }
 
                 .search-bar {
-                    width: 100%;
+                    margin: 0.5rem 1rem 0 0;
+                    flex: 0 0 90%;
+                    order: 2;
                 }
 
                 .results-info {
@@ -288,7 +301,8 @@
                 }
 
                 .sorting-dropdown {
-                    margin-top: 1em;
+                    margin-right: 1rem;
+                    order: 1;
                 }
             }
         }

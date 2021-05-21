@@ -13,7 +13,7 @@ export interface FrameType {
     createdAt: Date
 };
 
-export const API_URL: string =/*  process.env.REACT_APP_API_URL ||  */'https://optic-back.herokuapp.com/api';
+export const API_URL: string = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000/api';
 
 export const COLORS: { id: number, color: string, style: CSSProperties }[] = [
     {

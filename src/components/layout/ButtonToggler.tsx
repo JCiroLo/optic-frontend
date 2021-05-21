@@ -11,9 +11,9 @@ interface ButtonTogglerProps {
 
 const ButtonToggler: FC<ButtonTogglerProps> = ({ className = '', state, onClick }) => {
     return (
-        <div className={classnames('parent-toggler', { 'active': state })}>
+        <div className={classnames(`parent-toggler ${className}`, { 'active': state })}>
             <button
-                className={`btn btn-toggler ${className}`}
+                className={`btn btn-toggler`}
                 onClick={onClick}
             >
                 <span className="top"></span>

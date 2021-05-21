@@ -21,7 +21,7 @@ const App = () =>
     <div className='Content' >
       <Switch>
         <Route exact path='/' component={Home} />
-        <Route exact path='/probar' component={TestGlasses} />
+        <Route exact path='/test' component={TestGlasses} />
         <Route exact path="/management" component={Management} />
         <Route exact path="/catalogo" component={Catalogue} />
         <Route exact path='/other' component={() => <div style={{ margin: '66vh 0' }}> </div>} />

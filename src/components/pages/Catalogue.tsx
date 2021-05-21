@@ -1,12 +1,13 @@
 import { useState, useEffect, FC, ChangeEvent, FormEvent } from 'react';
 import classnames from 'classnames';
 
-import Input from '../layout/Input';
 import { formatText, getAllGlasses } from '../utils/Actions';
+import { COLORS, MATERIALS, SHAPES, FrameType } from '../utils/Consts';
+import Input from '../layout/Input';
 import LoadingScreen from '../layout/LoadingScreen';
 import Frame from '../layout/Frame';
-import { COLORS, MATERIALS, SHAPES, FrameType } from '../utils/Consts';
 import Error from '../layout/Error';
+import ButtonToggler from '../layout/ButtonToggler';
 
 import '../../css/Catalogue.scss';
 
@@ -18,7 +19,9 @@ const Catalogue: FC = () => {
     const [searchResults, setSearchResults] = useState<FrameType[]>([]);
     const [isSearch, setIsSearch] = useState(false);
     const [filterMode, setFilterMode] = useState({ mode: 'none', choice: 'none' });
-    const [toggleFilters, setTogglerFilters] = useState<boolean>(true);
+    const [toggleFilters, setTogglerFilters] = useState<boolean>(
+        !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    );
 
     useEffect(() => {
         document.title = 'Catálogo';
@@ -164,7 +167,12 @@ const Catalogue: FC = () => {
         <div className="Catalogue row mx-0">
             {loading && <LoadingScreen />}
 
-            <div className={classnames("filters col-12 col-md-3 principal-font", { 'active': toggleFilters })}>
+            <div className={classnames("filters principal-font", { 'active': !toggleFilters })}>
+                <ButtonToggler
+                    className="btn-open-filters-mobile"
+                    state={toggleFilters}
+                    onClick={() => setTogglerFilters((prev) => !prev)}
+                />
                 <p style={{ marginTop: '1em' }}><strong>Filtrar por color</strong></p>
                 <div className="colors row mx-0">
                     {COLORS.map(({ id, color, style }) =>
@@ -209,16 +217,14 @@ const Catalogue: FC = () => {
                     </div>
                 </div>
             </div>
-            <div className={classnames("shop col-12 col-md-9 row mx-0", { 'active': toggleFilters })}>
-                <div className="filter-actions col-12 row mx-0 secondary-font">
-                    <button
-                        className="btn btn-toggler"
+            <div className={classnames("shop row", { 'active': !toggleFilters })}>
+                <div className="filter-actions col-12 row secondary-font">
+                    <ButtonToggler
+                        className="btn-open-filters"
+                        state={toggleFilters}
                         onClick={() => setTogglerFilters((prev) => !prev)}
-                    >
-                        <span className="top"></span>
-                        <span className="mid"></span>
-                        <span className="bot"></span>
-                    </button>
+                    />
+
                     <form className="search-bar" noValidate onSubmit={submitSearch}>
                         <Input
                             id="searchbar"

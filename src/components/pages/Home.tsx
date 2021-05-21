@@ -95,7 +95,7 @@ const Home: FC = () => {
 
             <Slider
                 {...bestSellsSettings}
-                className="slide-best-sells"
+                className="best-sells"
             >
                 {mounts.map((frame, index) =>
                     <Frame
@@ -111,7 +111,7 @@ const Home: FC = () => {
 
             <Slider
                 {...bestSellsSettings}
-                className="slide-best-sells"
+                className="best-offers"
                 style={{ marginBottom: '150px' }}
             >
                 {mounts.map((frame, index) =>

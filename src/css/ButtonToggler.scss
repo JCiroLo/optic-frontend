@@ -1,6 +1,9 @@
 @import "Config";
 
 .parent-toggler {
+    height: 30px;
+    width: 30px;
+
     &.active {
         .btn-toggler {
             $dist: 0.4rem;
@@ -18,13 +21,14 @@
     }
 
     .btn-toggler {
+        height: inherit;
+        width: inherit;
         display: flex;
         justify-content: space-around;
         flex-direction: column;
         padding: 0;
-        margin: 0 0.5rem;
-        margin-left: 1.5rem;
-        height: 30px;
+        margin: 0;
+        
         border-radius: 50px;
 
         transition: background-color 0.25s ease-out;
@@ -34,8 +38,8 @@
         }
 
         span {
-            height: 1px;
-            width: 30px;
+            height: 2px;
+            width: inherit;
 
             background-color: $SecondaryColor;
 
